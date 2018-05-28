@@ -52,8 +52,8 @@ LDIRS=-L$(LDIR) -L$(JEMALLOC_LDIR) $(LIBCONFIG_LDIR) -L$(RE2_PATH)/obj -L$(MARIA
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Darwin)
-	IDIRS+= -I/usr/local/include -I/usr/local/opt/openssl/include
-	LDIRS+= -L/usr/local/lib
+	IDIRS+= -I/opt/boxen/homebrew/Cellar/openssl/1.0.2m/include
+	LDIRS+= -L/opt/boxen/homebrew/Cellar/openssl/1.0.2m/lib
 endif
 
 PROXYSQLCLICKHOUSE := $(shell echo $(PROXYSQLCLICKHOUSE))
@@ -74,7 +74,7 @@ MYLIBS=-Wl,--export-dynamic -Wl,-Bstatic -lconfig -lproxysql -ldaemon -ljemalloc
 endif
 
 ifeq ($(UNAME_S),Darwin)
-	MYLIBS=-lssl -lre2 -lmariadbclient -lpthread -lm -lz -liconv -lcrypto -lcurl
+	MYLIBS=-lssl -lre2 -lmariadbclient -lpthread -lm -lz -liconv -lcrypto
 endif
 ifeq ($(UNAME_S),Linux)
 	MYLIBS+= -ldl
@@ -85,7 +85,7 @@ endif
 
 LIBPROXYSQLAR=$(LDIR)/libproxysql.a
 ifeq ($(UNAME_S),Darwin)
-	LIBPROXYSQLAR=$(LDIR)/libproxysql.a ../deps/libmicrohttpd/libmicrohttpd/src/microhttpd/.libs/libmicrohttpd.a ../deps/pcre/pcre/.libs/libpcre.a ../deps/pcre/pcre/.libs/libpcrecpp.a  ../deps/libdaemon/libdaemon/libdaemon/.libs/libdaemon.a  ../deps/libconfig/libconfig/lib/.libs/libconfig++.a ../deps/libconfig/libconfig/lib/.libs/libconfig.a ../deps/sqlite3/sqlite3/sqlite3.o
+	LIBPROXYSQLAR=$(LDIR)/libproxysql.a ../deps/libmicrohttpd/libmicrohttpd/src/microhttpd/.libs/libmicrohttpd.a ../deps/pcre/pcre/.libs/libpcre.a ../deps/pcre/pcre/.libs/libpcrecpp.a  ../deps/libdaemon/libdaemon/libdaemon/.libs/libdaemon.a  ../deps/libconfig/libconfig/lib/.libs/libconfig++.a ../deps/libconfig/libconfig/lib/.libs/libconfig.a ../deps/sqlite3/sqlite3/sqlite3.o ../deps/curl/curl/lib/.libs/libcurl.a
 endif
 
 ODIR= obj
